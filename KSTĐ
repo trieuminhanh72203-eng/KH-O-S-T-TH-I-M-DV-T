@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)file:///C:/Users/trieu/Downloads/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Discrete Choice Experiment Survey</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="file:///C:/Users/Admin/OneDrive/OneDrive/Kh%E1%BA%A3o%20s%C3%A1t/rating_feedback_review_checklist_rate_questionnaire_survey_icon_231920.ico">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./Discrete Choice Experiment Survey_files/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="./Discrete Choice Experiment Survey_files/jquery-3.6.0.min.js.tải xuống"></script>
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .timer {
+            font-weight: bold;
+            color: red;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+	/* Căn lề trái cho toàn bộ nội dung */
+        h1, h3, p, table {
+            text-align: left !important;
+        }
+        .info-table th, .info-table td {
+            padding: 10px;
+            vertical-align: top; /* Đảm bảo văn bản căn trên cùng trong ô */
+        }
+    </style>
+</head>
+<body>
+    <!-- Introduction Section -->
+    <div class="container">
+        <h1>Chào Mừng Bạn Đến Với Khảo Sát!</h1>
+        <p>
+            Khảo sát này nhằm tìm hiểu sở thích của bạn về các dịch vụ nâng cao chất lượng đào tạo. Bạn sẽ được yêu cầu chọn giữa các dịch vụ khác nhau dựa trên các thuộc tính như E-learning, Chi phí tăng thêm, Người cung cấp dịch vụ, Quy mô lớp học, Người hướng dẫn cá nhân, Cơ sở vật chất và trải nghiệm học tập. Phản hồi của bạn sẽ giúp chúng tôi hiểu rõ hơn về sở thích của sinh viên. Vui lòng đọc kỹ hướng dẫn trước khi bắt đầu. Xin cảm ơn!
+        </p>
+<!-- Additional Image -->
+        <h3>Tổng quan về Khảo sát</h3>
+        <p>
+Cấu trúc khảo sát bao gồm:
+- 13 câu hỏi chính: Đánh giá các phương án dịch vụ đào tạo.
+- 06 câu hỏi thông tin: Giúp nhóm phân loại dữ liệu chính xác.
+- Phần phản hồi: Nơi bạn đóng góp ý kiến trực tiếp cho nhóm nghiên cứu.	
+	</p>
+        <p>
+            Bạn cần dành ít nhất 10 giây trên trang này trước khi bắt đầu khảo sát. Nút "Bắt đầu khảo sát" sẽ được kích hoạt sau khi bộ đếm thời gian kết thúc. Cảm ơn sự đóng góp quý báu của bạn!
+        </p>
+        <p>Thời gian còn lại: <span class="timer" id="timer">0</span> giây</p>
+        <button id="startSurveyBtn" class="btn btn-primary">Bắt đầu khảo sát</button>
+    </div>
+
+    <!-- JavaScript for Timer and Random Redirect -->
+    <script>
+        $(document).ready(function() {
+            let timeLeft = 10;
+            const timerDisplay = $("#timer");
+            const startBtn = $("#startSurveyBtn");
+
+            // Countdown timer
+            const countdown = setInterval(function() {
+                timeLeft--;
+                timerDisplay.text(timeLeft);
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    startBtn.prop("disabled", false);
+                    timerDisplay.text("0");
+                }
+            }, 1000);
+            // Array of Google Forms links
+            const surveyLinks = [
+ "https://docs.google.com/forms/d/e/1FAIpQLSc8pvtYKtH3THTE6SvjkotcYY1CwwUfhqdMWJMjCkAoCDOq0Q/viewform?usp=header", // Thay bằng link Google Form 1
+                "https://docs.google.com/forms/d/e/1FAIpQLSfzx4SxkFTf8GqufCItKBy2ZcXiend6ohLmphEQdCMi4agOeg/viewform?usp=header"  // Thay bằng link Google Form 2
+            ];
+// Initialize form selection counts in localStorage if not present
+            if (!localStorage.getItem("formCounts")) {
+                localStorage.setItem("formCounts", JSON.stringify({ form1: 0, form2: 0 }));
+            }
+
+            // Function to get current form counts
+            function getFormCounts() {
+                return JSON.parse(localStorage.getItem("formCounts"));
+            }
+
+            // Function to update form counts
+            function updateFormCounts(selectedForm) {
+                let counts = getFormCounts();
+                if (selectedForm === 0) {
+                    counts.form1 += 1;
+                } else {
+                    counts.form2 += 1;
+                }
+                localStorage.setItem("formCounts", JSON.stringify(counts));
+            }
+
+            // Function to select form based on frequency balancing
+            function selectForm() {
+                let counts = getFormCounts();
+                let total = counts.form1 + counts.form2;
+
+                // If counts are equal or first selection, use random
+                if (counts.form1 === counts.form2 || total === 0) {
+                    return Math.floor(Math.random() * 2); // 0 or 1
+                }
+
+                // Otherwise, choose the form with fewer selections
+                return counts.form1 < counts.form2 ? 0 : 1;
+            }
+
+            // Redirect on button click
+            startBtn.click(function() {
+                const selectedIndex = selectForm();
+                updateFormCounts(selectedIndex);
+                window.location.href = surveyLinks[selectedIndex];
+            });
+        });
+    </script>
+
+    <script src="./Discrete Choice Experiment Survey_files/bootstrap.min.js.tải xuống"></script>
+
+
+          </body></html>
